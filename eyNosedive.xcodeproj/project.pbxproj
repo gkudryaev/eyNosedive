@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7D54F94F1EF814900067905B /* Logon.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D54F94E1EF814900067905B /* Logon.storyboard */; };
+		7D54F9521EF81D260067905B /* AppModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D54F9511EF81D250067905B /* AppModule.swift */; };
+		7D54F9541EF81DBB0067905B /* JsonHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D54F9531EF81DBB0067905B /* JsonHelper.swift */; };
+		7D54F9561EF81FBF0067905B /* LogonEmailTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D54F9551EF81FBF0067905B /* LogonEmailTVC.swift */; };
+		7D54F9581EF820420067905B /* LogonEmailCodeTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D54F9571EF820420067905B /* LogonEmailCodeTVC.swift */; };
+		7D54F95C1EF842D10067905B /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D54F95B1EF842D10067905B /* UserData.swift */; };
+		7D54F95E1EF846BB0067905B /* LogoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D54F95D1EF846BB0067905B /* LogoVC.swift */; };
+		7D54F9601EF86F970067905B /* AssessmentTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D54F95F1EF86F970067905B /* AssessmentTVC.swift */; };
+		7D54F9621EF87F740067905B /* ProfileTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D54F9611EF87F740067905B /* ProfileTVC.swift */; };
+		7D54F9661EF88E7E0067905B /* QuestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D54F9651EF88E7E0067905B /* QuestCell.swift */; };
+		7D54F9691EF890200067905B /* CosmosDistrib.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D54F9681EF890200067905B /* CosmosDistrib.swift */; };
 		7D8F40A51EE698EB0041B76A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8F40A41EE698EB0041B76A /* AppDelegate.swift */; };
 		7D8F40A71EE698EB0041B76A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8F40A61EE698EB0041B76A /* ViewController.swift */; };
 		7D8F40AA1EE698EB0041B76A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D8F40A81EE698EB0041B76A /* Main.storyboard */; };
@@ -14,11 +25,22 @@
 		7D8F40AF1EE698EB0041B76A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D8F40AD1EE698EB0041B76A /* LaunchScreen.storyboard */; };
 		7D8F40B81EE69B390041B76A /* Directory.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D8F40B71EE69B390041B76A /* Directory.storyboard */; };
 		7D8F40BA1EE69E090041B76A /* SearchTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8F40B91EE69E090041B76A /* SearchTVC.swift */; };
-		7D8F40BC1EE6A2790041B76A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8F40BB1EE6A2790041B76A /* User.swift */; };
-		7D8F40CA1EE6C2CA0041B76A /* userList.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7D8F40C91EE6C2CA0041B76A /* userList.txt */; };
+		7DB1908C1EFD4573008DFD3A /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB1908B1EFD4573008DFD3A /* SearchCell.swift */; };
+		7DF3F6B51F04E43300E80F61 /* HistoryTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF3F6B41F04E43300E80F61 /* HistoryTVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7D54F94E1EF814900067905B /* Logon.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Logon.storyboard; sourceTree = "<group>"; };
+		7D54F9511EF81D250067905B /* AppModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppModule.swift; sourceTree = "<group>"; };
+		7D54F9531EF81DBB0067905B /* JsonHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonHelper.swift; sourceTree = "<group>"; };
+		7D54F9551EF81FBF0067905B /* LogonEmailTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogonEmailTVC.swift; sourceTree = "<group>"; };
+		7D54F9571EF820420067905B /* LogonEmailCodeTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogonEmailCodeTVC.swift; sourceTree = "<group>"; };
+		7D54F95B1EF842D10067905B /* UserData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
+		7D54F95D1EF846BB0067905B /* LogoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoVC.swift; sourceTree = "<group>"; };
+		7D54F95F1EF86F970067905B /* AssessmentTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssessmentTVC.swift; sourceTree = "<group>"; };
+		7D54F9611EF87F740067905B /* ProfileTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTVC.swift; sourceTree = "<group>"; };
+		7D54F9651EF88E7E0067905B /* QuestCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestCell.swift; sourceTree = "<group>"; };
+		7D54F9681EF890200067905B /* CosmosDistrib.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CosmosDistrib.swift; sourceTree = "<group>"; };
 		7D8F40A11EE698EB0041B76A /* eyNosedive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = eyNosedive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D8F40A41EE698EB0041B76A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7D8F40A61EE698EB0041B76A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -28,8 +50,8 @@
 		7D8F40B01EE698EB0041B76A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7D8F40B71EE69B390041B76A /* Directory.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Directory.storyboard; sourceTree = "<group>"; };
 		7D8F40B91EE69E090041B76A /* SearchTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTVC.swift; sourceTree = "<group>"; };
-		7D8F40BB1EE6A2790041B76A /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		7D8F40C91EE6C2CA0041B76A /* userList.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = userList.txt; sourceTree = "<group>"; };
+		7DB1908B1EFD4573008DFD3A /* SearchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
+		7DF3F6B41F04E43300E80F61 /* HistoryTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryTVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +65,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7D54F94D1EF8145D0067905B /* Logon */ = {
+			isa = PBXGroup;
+			children = (
+				7D54F94E1EF814900067905B /* Logon.storyboard */,
+				7D54F95D1EF846BB0067905B /* LogoVC.swift */,
+				7D54F9551EF81FBF0067905B /* LogonEmailTVC.swift */,
+				7D54F9571EF820420067905B /* LogonEmailCodeTVC.swift */,
+			);
+			name = Logon;
+			sourceTree = "<group>";
+		};
+		7D54F9501EF815AB0067905B /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				7D54F95B1EF842D10067905B /* UserData.swift */,
+			);
+			name = Data;
+			sourceTree = "<group>";
+		};
+		7D54F9671EF88FF60067905B /* 3rd */ = {
+			isa = PBXGroup;
+			children = (
+				7D54F9681EF890200067905B /* CosmosDistrib.swift */,
+			);
+			name = 3rd;
+			sourceTree = "<group>";
+		};
 		7D8F40981EE698EB0041B76A = {
 			isa = PBXGroup;
 			children = (
@@ -68,8 +117,12 @@
 				7D8F40AB1EE698EB0041B76A /* Assets.xcassets */,
 				7D8F40AD1EE698EB0041B76A /* LaunchScreen.storyboard */,
 				7D8F40B01EE698EB0041B76A /* Info.plist */,
-				7D8F40C91EE6C2CA0041B76A /* userList.txt */,
+				7D54F9511EF81D250067905B /* AppModule.swift */,
+				7D54F9531EF81DBB0067905B /* JsonHelper.swift */,
 				7D8F40B61EE69B0B0041B76A /* Directory */,
+				7D54F94D1EF8145D0067905B /* Logon */,
+				7D54F9501EF815AB0067905B /* Data */,
+				7D54F9671EF88FF60067905B /* 3rd */,
 			);
 			path = eyNosedive;
 			sourceTree = "<group>";
@@ -78,8 +131,12 @@
 			isa = PBXGroup;
 			children = (
 				7D8F40B71EE69B390041B76A /* Directory.storyboard */,
+				7DB1908B1EFD4573008DFD3A /* SearchCell.swift */,
 				7D8F40B91EE69E090041B76A /* SearchTVC.swift */,
-				7D8F40BB1EE6A2790041B76A /* User.swift */,
+				7D54F9651EF88E7E0067905B /* QuestCell.swift */,
+				7D54F95F1EF86F970067905B /* AssessmentTVC.swift */,
+				7D54F9611EF87F740067905B /* ProfileTVC.swift */,
+				7DF3F6B41F04E43300E80F61 /* HistoryTVC.swift */,
 			);
 			name = Directory;
 			sourceTree = "<group>";
@@ -145,7 +202,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7D8F40B81EE69B390041B76A /* Directory.storyboard in Resources */,
-				7D8F40CA1EE6C2CA0041B76A /* userList.txt in Resources */,
+				7D54F94F1EF814900067905B /* Logon.storyboard in Resources */,
 				7D8F40AF1EE698EB0041B76A /* LaunchScreen.storyboard in Resources */,
 				7D8F40AC1EE698EB0041B76A /* Assets.xcassets in Resources */,
 				7D8F40AA1EE698EB0041B76A /* Main.storyboard in Resources */,
@@ -159,8 +216,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7D8F40BC1EE6A2790041B76A /* User.swift in Sources */,
+				7D54F9661EF88E7E0067905B /* QuestCell.swift in Sources */,
+				7D54F9621EF87F740067905B /* ProfileTVC.swift in Sources */,
+				7D54F95E1EF846BB0067905B /* LogoVC.swift in Sources */,
+				7DB1908C1EFD4573008DFD3A /* SearchCell.swift in Sources */,
+				7D54F9581EF820420067905B /* LogonEmailCodeTVC.swift in Sources */,
+				7D54F9521EF81D260067905B /* AppModule.swift in Sources */,
+				7D54F95C1EF842D10067905B /* UserData.swift in Sources */,
 				7D8F40A71EE698EB0041B76A /* ViewController.swift in Sources */,
+				7D54F9601EF86F970067905B /* AssessmentTVC.swift in Sources */,
+				7D54F9561EF81FBF0067905B /* LogonEmailTVC.swift in Sources */,
+				7DF3F6B51F04E43300E80F61 /* HistoryTVC.swift in Sources */,
+				7D54F9691EF890200067905B /* CosmosDistrib.swift in Sources */,
+				7D54F9541EF81DBB0067905B /* JsonHelper.swift in Sources */,
 				7D8F40BA1EE69E090041B76A /* SearchTVC.swift in Sources */,
 				7D8F40A51EE698EB0041B76A /* AppDelegate.swift in Sources */,
 			);
@@ -329,6 +397,7 @@
 				7D8F40B51EE698EB0041B76A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

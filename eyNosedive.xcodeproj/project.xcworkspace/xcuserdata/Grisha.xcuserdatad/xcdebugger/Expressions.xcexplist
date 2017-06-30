@@ -3,7 +3,49 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "SearchTVC.filterContentForSearchText(String, scope : String) -&gt; ():SearchTVC.swift">
+         contextName = "AssessmentTVC.tableView(UITableView, heightForRowAt : IndexPath) -&gt; CGFloat:AssessmentTVC.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "lbl.font.size">
+            </PersistentString>
+            <PersistentString
+               value = "quest.desc">
+            </PersistentString>
+            <PersistentString
+               value = "indexPath.section">
+            </PersistentString>
+            <PersistentString
+               value = "lbl.frame.width">
+            </PersistentString>
+            <PersistentString
+               value = "lbl.frame.height">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "UserData.save() -&gt; ():UserData.swift">
+      </ContextState>
+      <ContextState
+         contextName = "AssessmentTVC.viewDidLoad() -&gt; ():AssessmentTVC.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "navigationController.navigationBar.topItem">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "UserData.save(json : [String : Any]) -&gt; ():UserData.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "json[&quot;person&quot;]  as []">
+            </PersistentString>
+            <PersistentString
+               value = "(json[&quot;persons&quot;] )[0]">
+            </PersistentString>
+            <PersistentString
+               value = "q as? [[String]]">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "SearchTVC.(filterContentForSearchText(String, scope : String) -&gt; ()).(closure #2):SearchTVC.swift">
@@ -12,6 +54,59 @@
                value = "s.name">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "static UserData.Assessment.initAssessments(assessAttrs : [[Any]]) -&gt; ([UserData.Assessment], [String : [UserData.Assessment]], [String]):UserData.swift">
+      </ContextState>
+      <ContextState
+         contextName = "AssessmentTVC.tableView(UITableView, cellForRowAt : IndexPath) -&gt; UITableViewCell:AssessmentTVC.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "cell.labelDesc.frame.width">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "SearchTVC.prepare(for : UIStoryboardSegue, sender : Any?) -&gt; ():SearchTVC.swift">
+      </ContextState>
+      <ContextState
+         contextName = "static JsonHelper.(loadDataFromURL(String, method : String, params : [String : Any]?, viewController : UIViewController?, completion : ([String : Any]?, String?) -&gt; ()) -&gt; ()).(closure #1).(closure #1):JsonHelper.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "error.debugDescription">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "SearchTVC.tableView(UITableView, cellForRowAt : IndexPath) -&gt; UITableViewCell:SearchTVC.swift">
+      </ContextState>
+      <ContextState
+         contextName = "SearchTVC.filterContentForSearchText(String, scope : String) -&gt; ():SearchTVC.swift">
+      </ContextState>
+      <ContextState
+         contextName = "static UserData.Assessment.initAssessments(assessAttrs : [[Any]]) -&gt; [UserData.Assessment]:UserData.swift">
+      </ContextState>
+      <ContextState
+         contextName = "LogonEmailCodeTVC.responseLogonCode(json : [String : Any]?, error : String?) -&gt; ():LogonEmailCodeTVC.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "json[&quot;display_name&quot;] as String">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "SearchTVC.searchBarShouldBeginEditing(UISearchBar) -&gt; Bool:SearchTVC.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "UserData.shared">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "UserData.load() -&gt; ():UserData.swift">
+      </ContextState>
+      <ContextState
+         contextName = "AssessmentTVC.numberOfSections(in : UITableView) -&gt; Int:AssessmentTVC.swift">
       </ContextState>
    </ContextStates>
 </VariablesViewState>
