@@ -27,6 +27,9 @@
 		7D8F40BA1EE69E090041B76A /* SearchTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8F40B91EE69E090041B76A /* SearchTVC.swift */; };
 		7DB1908C1EFD4573008DFD3A /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB1908B1EFD4573008DFD3A /* SearchCell.swift */; };
 		7DF3F6B51F04E43300E80F61 /* HistoryTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF3F6B41F04E43300E80F61 /* HistoryTVC.swift */; };
+		7DF3F6B71F06D59000E80F61 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF3F6B61F06D59000E80F61 /* TabBarController.swift */; };
+		7DF3F6B91F0B969800E80F61 /* RequestTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF3F6B81F0B969800E80F61 /* RequestTVC.swift */; };
+		7DF3F6BB1F0D634900E80F61 /* ProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF3F6BA1F0D634900E80F61 /* ProfileCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +55,9 @@
 		7D8F40B91EE69E090041B76A /* SearchTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTVC.swift; sourceTree = "<group>"; };
 		7DB1908B1EFD4573008DFD3A /* SearchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
 		7DF3F6B41F04E43300E80F61 /* HistoryTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryTVC.swift; sourceTree = "<group>"; };
+		7DF3F6B61F06D59000E80F61 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		7DF3F6B81F0B969800E80F61 /* RequestTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestTVC.swift; sourceTree = "<group>"; };
+		7DF3F6BA1F0D634900E80F61 /* ProfileCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,12 +137,15 @@
 			isa = PBXGroup;
 			children = (
 				7D8F40B71EE69B390041B76A /* Directory.storyboard */,
+				7DF3F6B61F06D59000E80F61 /* TabBarController.swift */,
 				7DB1908B1EFD4573008DFD3A /* SearchCell.swift */,
 				7D8F40B91EE69E090041B76A /* SearchTVC.swift */,
 				7D54F9651EF88E7E0067905B /* QuestCell.swift */,
 				7D54F95F1EF86F970067905B /* AssessmentTVC.swift */,
+				7DF3F6BA1F0D634900E80F61 /* ProfileCell.swift */,
 				7D54F9611EF87F740067905B /* ProfileTVC.swift */,
 				7DF3F6B41F04E43300E80F61 /* HistoryTVC.swift */,
+				7DF3F6B81F0B969800E80F61 /* RequestTVC.swift */,
 			);
 			name = Directory;
 			sourceTree = "<group>";
@@ -217,6 +226,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				7D54F9661EF88E7E0067905B /* QuestCell.swift in Sources */,
+				7DF3F6B71F06D59000E80F61 /* TabBarController.swift in Sources */,
+				7DF3F6B91F0B969800E80F61 /* RequestTVC.swift in Sources */,
 				7D54F9621EF87F740067905B /* ProfileTVC.swift in Sources */,
 				7D54F95E1EF846BB0067905B /* LogoVC.swift in Sources */,
 				7DB1908C1EFD4573008DFD3A /* SearchCell.swift in Sources */,
@@ -229,6 +240,7 @@
 				7DF3F6B51F04E43300E80F61 /* HistoryTVC.swift in Sources */,
 				7D54F9691EF890200067905B /* CosmosDistrib.swift in Sources */,
 				7D54F9541EF81DBB0067905B /* JsonHelper.swift in Sources */,
+				7DF3F6BB1F0D634900E80F61 /* ProfileCell.swift in Sources */,
 				7D8F40BA1EE69E090041B76A /* SearchTVC.swift in Sources */,
 				7D8F40A51EE698EB0041B76A /* AppDelegate.swift in Sources */,
 			);
@@ -357,10 +369,12 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 96ZPQBX8HX;
 				INFOPLIST_FILE = eyNosedive/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ru.grigh.eyNosedive;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -371,10 +385,12 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = 96ZPQBX8HX;
 				INFOPLIST_FILE = eyNosedive/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ru.grigh.eyNosedive;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

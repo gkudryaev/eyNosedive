@@ -15,13 +15,17 @@ enum JsonUrls {
     case logon
     case logonCode
     case assessment
+    case requestManual
+    case requestDelete
+    case refresh
     
     func request () -> (url: String, method: String) {
         
         //let host = "http://127.0.0.1:8080/ords/ey/"
         //let host = "http://192.168.0.131:8080/ords/ey/"
         //let host = "http://127.0.0.1:8000/nosedive/apex/"
-        let host = "http://192.168.0.131:8000/nosedive/apex/"
+        //let host = "http://192.168.0.131:8000/nosedive/apex/"
+        let host = "http://ec2-52-57-85-114.eu-central-1.compute.amazonaws.com/wsgi/ords/ey/"
 
         switch self {
         case .logon:
@@ -30,6 +34,12 @@ enum JsonUrls {
             return (host + "v000.1/logonCode", "POST")
         case .assessment:
             return (host + "v000.1/assessment", "POST")
+        case .requestManual:
+            return (host + "v000.1/request", "POST")
+        case .requestDelete:
+            return (host + "v000.1/requestDelete", "POST")
+        case .refresh:
+            return (host + "v000.1/refresh", "POST")
         }
     }
 }
@@ -77,10 +87,23 @@ class JsonHelper {
         
         request.httpMethod = method
         
-        if let params = params {
+        if var params = params {
+            if UserData.shared.id != "" {
+                params["id"] = UserData.shared.id
+                params["pass"] = UserData.shared.pass
+            }
+            let dev = UIDevice.current
+            params ["device"] = dev.identifierForVendor?.uuidString
+            params["os"] = "iOS"
+            params ["deviceProp"] = [
+                ["name": "model", "val": dev.model],
+                ["name": "name", "val": dev.name],
+                ["name": "systemName", "val": dev.systemName],
+                ["name": "systemVersion", "val": dev.systemVersion],
+                ["name": "localizedModel", "val": dev.localizedModel]
+            ]
             request.httpBody = try! JSONSerialization.data(withJSONObject: params, options: [])
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            
         }
         
         

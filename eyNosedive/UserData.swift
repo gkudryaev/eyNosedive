@@ -19,6 +19,9 @@ class UserData {
     let keyQuestionary = "eyNosediveQuestionary"
     let keyAssessmentsOutgoing = "eyAssessmentsOutgoing"
     let keyAssessments = "eyAssessments"
+    let keyRequests = "eyRequests"
+    let keyOutRequests = "eyOutRequests"
+    let keyPersonsSeq = "eyPersonsSeq"
     
     var id: String = ""
     var name: String = ""
@@ -31,16 +34,24 @@ class UserData {
     var historyDates: [String] = []
     var historyAssessments: [String: [Assessment]] = [:]
     
+    var requests: [Request] = []
+    var events: [String] = []
+    var eventRequests : [String: [Request]] = [:]
     
+    var outRequests: [String] = []
+    
+    var personsSeq: String = "0"
     
     struct Person {
         var name: String
         var email: String
         var position: String
         var department: String
-        var photoUrl: String = ""
+        var photoUrl: String
+        var status: String
         var id: String
         var sn: String
+        
 
         var searchString: String
 
@@ -51,6 +62,7 @@ class UserData {
             self.position = person[3]
             self.department = person[4]
             self.photoUrl = person[5]
+            self.status = person[6]
             self.sn = ""
             self.searchString = self.name.lowercased() + " " + self.email.lowercased()
         }
@@ -61,7 +73,8 @@ class UserData {
                 email,
                 position,
                 department,
-                photoUrl
+                photoUrl,
+                status
             ]
         }
         static func initPersons (personsAttributes: [[String]]) -> [Person] {
@@ -109,8 +122,9 @@ class UserData {
     
     struct Assessment {
         enum AssessmentType: String {
-            case date
-            case event
+            case MANUAL
+            case POOL
+            case MEET
         }
         var type: AssessmentType
         var date: String
@@ -161,8 +175,61 @@ class UserData {
         
     }
 
+    struct Request {
+        
+        enum EventType: String {
+            case MANUAL
+            case POOL
+            case MEET
+        }
+        var id: String
+        var date: String
+        var type: EventType
+        var estimated: String
+        var event: String
+        
+        init (requestAttr: [String]) {
+            self.id = requestAttr[0]
+            self.date = requestAttr[1]
+            self.type = EventType(rawValue: requestAttr[2])!
+            self.estimated = requestAttr[3]
+            self.event = requestAttr[4]
+        }
+        func attributes () -> [String] {
+            return [
+                id,
+                date,
+                type.rawValue,
+                estimated,
+                event             ]
+        }
+        static func initRequests (requestAttrs: [[String]]) ->
+            ([Request], [String: [Request]], [String])
+        {
+            var requests: [Request] = []
+            var eventRequests: [String:[Request]] = [:]
+            for r in requestAttrs {
+                let request = Request(requestAttr: r)
+                requests.append(request)
+                var r = eventRequests[request.event]
+                if r == nil {
+                    r = []
+                }
+                r?.append(request)
+                eventRequests[request.event] = r
+            }
+            let events: [String] = Array(eventRequests.keys)
+            //events.sort {toDate($0) > toDate($1)}
+            
+            return (requests, eventRequests, events)
+        }
+        
+    }
     
-   func save() {
+
+    
+    func save() {
+    
         let std = UserDefaults.standard
         std.set ([
             "id": id,
@@ -171,6 +238,8 @@ class UserData {
             "pass": pass
             ], forKey: keyUserAttributes
         )
+    
+        std.set(personsSeq, forKey: keyPersonsSeq)
         
         var personsAttributes: [[String]] = []
         for person in persons {
@@ -190,7 +259,16 @@ class UserData {
             assessmentsAttributes.append(assessment.attributes())
         }
         std.set(assessmentsAttributes, forKey: keyAssessments)
+    
 
+        var requestsAttributes: [[String]] = []
+        for request in requests {
+            requestsAttributes.append(request.attributes())
+        }
+        std.set(requestsAttributes, forKey: keyRequests)
+        
+        
+        std.set(outRequests, forKey: keyOutRequests)
     }
     
     func save (json: [String: Any]) {
@@ -202,8 +280,27 @@ class UserData {
             pass = json ["pass"] ?? ""
         }
         
+        if let personsSeq = json["personsSeq"] as? String {
+            self.personsSeq = personsSeq
+        }
+        
         if let personsJson = json["persons"] as? [[String]] {
             persons = Person.initPersons(personsAttributes: personsJson)
+        }
+
+        if let personsJson = json["personsIncrement"] as? [[String]] {
+            
+            let personsIncrement = Person.initPersons(personsAttributes: personsJson)
+            if personsIncrement.count > 0 {
+                var persDict: [String: Person] = [:]
+                for person in persons {
+                    persDict[person.id] = person
+                }
+                for person in personsIncrement {
+                    persDict[person.id] = person
+                }
+                persons = Array(persDict.values)
+            }
         }
         
         if let questionaryJson = json["questionary"] as? [[String]] {
@@ -214,7 +311,16 @@ class UserData {
             (assessments, historyAssessments, historyDates)
                 = Assessment.initAssessments(assessAttrs: assessmentsJson)
         }
-        
+
+        if let requestsJson = json["requests"] as? [[String]] {
+            (requests, eventRequests, events)
+                = Request.initRequests(requestAttrs: requestsJson)
+        }
+
+        if let requestsJson = json["outRequests"] as? [String] {
+            outRequests = requestsJson
+        }
+
         save()
     }
 
@@ -226,6 +332,9 @@ class UserData {
             pass = p["pass"] ?? ""
         }
         
+        if let personsSeq = UserDefaults.standard.string(forKey: keyPersonsSeq) {
+            self.personsSeq = personsSeq
+        }
 
         if let personsAttributes = UserDefaults.standard.array(forKey: keyPersons) as? [[String]] {
             persons = Person.initPersons(personsAttributes: personsAttributes)
@@ -237,7 +346,13 @@ class UserData {
             (assessments, historyAssessments, historyDates)
                 = Assessment.initAssessments(assessAttrs:assessmentsAttributes)
         }
-
+        if let requestsAttributes = UserDefaults.standard.array(forKey: keyRequests) as? [[String]] {
+            (requests, eventRequests, events)
+                = Request.initRequests(requestAttrs: requestsAttributes)
+        }
+        if let outRequests = UserDefaults.standard.array(forKey: keyOutRequests) as? [String] {
+            self.outRequests = outRequests
+        }
     }
 
 }

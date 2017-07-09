@@ -12,10 +12,17 @@ class SearchTVC: UITableViewController {
     
     let searchController = UISearchController(searchResultsController: nil)
     
-    let persons = UserData.shared.persons
+    var persons: [UserData.Person] = []
+    
     var filteredPersons: [UserData.Person] = []
     
     var selectedIndex: IndexPath?
+    
+    func updateData () {
+        persons = UserData.shared.persons.filter {
+            $0.id != UserData.shared.id
+        }
+    }
     
     @IBAction func cancelAssessment(segue:UIStoryboardSegue) {
     }
@@ -39,15 +46,20 @@ class SearchTVC: UITableViewController {
             //todo append event_id
             i += 1
         }
-        requestAssessment(estimated: vc.person!.id, assessment: assessment)
+        requestAssessment(estimated: vc.person!.id, assessment: assessment, request: vc.request)
     }
-    func requestAssessment (estimated: String, assessment: [[String:String]]) {
+    func requestAssessment (estimated: String, assessment: [[String:String]], request: UserData.Request?) {
+        
+        var params: [String: Any] = ["id": UserData.shared.id,
+                                     "pass": UserData.shared.pass,
+                                     "estimated_id": estimated,
+                                     "assessment": assessment
+                                    ]
+        if let request = request {
+            params["request_id"] = request.id
+        }
         JsonHelper.request(.assessment,
-                           ["id": UserData.shared.id,
-                            "pass": UserData.shared.pass,
-                            "estimated_id": estimated,
-                            "assessment": assessment		
-                            ],
+                           params,
                            self,
                            {(json: [String: Any]?, error: String?) -> Void in
                             self.responseAssessment(json: json, error: error)
@@ -69,6 +81,7 @@ class SearchTVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        updateData()
         
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
@@ -89,11 +102,15 @@ class SearchTVC: UITableViewController {
         //navigationController?.navigationBar.isHidden = true
     }
     
+    
     /*
     override func viewDidDisappear(_ animated: Bool) {
-        searchController.searchBar.isHidden = true
+        
+        //searchController.searchBar.isHidden = true
     }
+ */
     
+     /*
     override func viewDidAppear(_ animated: Bool) {
         searchController.searchBar.isHidden = false
     }

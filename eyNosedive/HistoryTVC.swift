@@ -10,10 +10,10 @@ import UIKit
 
 class HistoryTVC: UITableViewController {
     
-    let assessments = UserData.shared.assessments
-    let historyAssessments = UserData.shared.historyAssessments
-    let historyDates = UserData.shared.historyDates
-    let persons = UserData.shared.persons
+    var assessments = UserData.shared.assessments
+    var historyAssessments = UserData.shared.historyAssessments
+    var historyDates = UserData.shared.historyDates
+    var persons = UserData.shared.persons
     
     var selectedIndex: IndexPath?
 

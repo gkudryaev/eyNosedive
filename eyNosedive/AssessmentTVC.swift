@@ -47,12 +47,18 @@ class AssessmentTVC: UITableViewController {
     var questionary = UserData.shared.questionary
     var assessment: UserData.Assessment?
     var isEditable: Bool = true
+    var request: UserData.Request?
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.rightBarButtonItem?.isEnabled = isEditable
+        if !isEditable {
+            self.navigationItem.title = assessment?.date
+            self.navigationItem.titleView?.tintColor = UIColor.white
+            self.navigationItem.leftBarButtonItems?.removeAll()
+            self.navigationItem.rightBarButtonItems?.removeAll()
+        }
 
     }
     
@@ -82,6 +88,17 @@ class AssessmentTVC: UITableViewController {
             cell.departmentLabel.text = person?.department
             cell.emailLabel.text = person?.email
             cell.photoView.image = UIImage()
+            cell.vc = self
+            if (UserData.shared.outRequests.filter {
+                $0 == person?.id
+            }).count != 0 {
+                cell.requestButton.isEnabled = false
+                cell.requestButton.setTitle("Запрос отправлен", for: .normal)
+            } else {
+                cell.requestButton.isEnabled = true
+                cell.requestButton.setTitle("Отправить запрос", for: .normal)
+            }
+            
             AppModule.shared.imageFromUrl(person?.photoUrl, cell.photoView)
 
             return cell
@@ -120,7 +137,7 @@ class AssessmentTVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return 120
+            return 130
         } else {
             
             let quest = questionary[indexPath.section-1]
