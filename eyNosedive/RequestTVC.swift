@@ -128,7 +128,7 @@ class RequestTVC: UITableViewController {
 
                 let assessments = UserData.shared.assessments
                 var paa = assessments.filter {$0.estimated == vc.person!.id}
-                paa = paa.sorted {UserData.Assessment.toDate($0.date) > UserData.Assessment.toDate($1.date)}
+                paa = paa.sorted {UserData.toDate($0.date) > UserData.toDate($1.date)}
                 vc.assessment = paa.first
 
                 vc.isEditable = true

@@ -14,7 +14,6 @@ class ProfileTVC: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
 
     @IBAction func photoPressed(_ sender: Any) {
@@ -80,9 +79,7 @@ class ProfileTVC: UITableViewController {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "PhotoCell", for: indexPath)
                 as! ProfileCell
-            let user = UserData.shared.persons.filter {
-                $0.id == UserData.shared.id
-            }.first
+            let user = UserData.shared.user
             AppModule.shared.imageFromUrl(user?.photoUrl, cell.photoImageView)
             cell.nameLabel.text = user?.name
             cell.position.text = user?.position

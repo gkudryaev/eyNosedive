@@ -28,9 +28,32 @@ class UserData {
     var email: String = ""
     var pass: String = ""
     
-    var persons: [Person] = []
+    var persons: [Person] = [] {
+        didSet {
+            personsSearch = persons.filter {$0.id != self.id}
+            user = persons.filter{$0.id == self.id}.first
+        }
+    }
+    var personsSearch: [Person] = []
+    var user: Person?
     var questionary: [Quest] = []
-    var assessments: [Assessment] = []
+    var assessments: [Assessment] = [] {
+        didSet {
+            var historyAssessments: [String:[Assessment]] = [:]
+            for assessment in assessments {
+                var assDate = historyAssessments[assessment.date]
+                if assDate == nil {
+                    assDate = []
+                }
+                assDate?.append(assessment)
+                historyAssessments[assessment.date] = assDate
+            }
+            var historyDates: [String] = Array(historyAssessments.keys)
+            historyDates.sort {UserData.toDate($0) > UserData.toDate($1)}
+            self.historyDates = historyDates
+            self.historyAssessments = historyAssessments
+        }
+    }
     var historyDates: [String] = []
     var historyAssessments: [String: [Assessment]] = [:]
     
@@ -41,6 +64,12 @@ class UserData {
     var outRequests: [String] = []
     
     var personsSeq: String = "0"
+
+    static func toDate (_ str: String) -> String {
+        var strAttr = str.components(separatedBy: ".")
+        return strAttr[2] + strAttr[1] + strAttr[0]
+    }
+
     
     struct Person {
         var name: String
@@ -119,7 +148,7 @@ class UserData {
         }
 
     }
-    
+
     struct Assessment {
         enum AssessmentType: String {
             case MANUAL
@@ -148,30 +177,17 @@ class UserData {
                 questions
             ]
         }
-        static func toDate (_ str: String) -> String {
-            var strAttr = str.components(separatedBy: ".")
-            return strAttr[2] + strAttr[1] + strAttr[0]
-        }
         static func initAssessments (assessAttrs: [[Any]]) ->
-            ([Assessment], [String: [Assessment]], [String])
+            [Assessment]
         {
             var assessments: [Assessment] = []
-            var historyAssessments: [String:[Assessment]] = [:]
             for a in assessAttrs {
                 let assessment = Assessment(assessmentAttr: a)
                 assessments.append(assessment)
-                var a = historyAssessments[assessment.date]
-                if a == nil {
-                    a = []
-                }
-                a?.append(assessment)
-                historyAssessments[assessment.date] = a
             }
-            var historyDates: [String] = Array(historyAssessments.keys)
-            historyDates.sort {toDate($0) > toDate($1)}
-            
-            return (assessments, historyAssessments, historyDates)
+            return assessments
         }
+        
         
     }
 
@@ -308,8 +324,7 @@ class UserData {
         }
 
         if let assessmentsJson = json["assessments"] as? [[Any]] {
-            (assessments, historyAssessments, historyDates)
-                = Assessment.initAssessments(assessAttrs: assessmentsJson)
+            assessments = Assessment.initAssessments(assessAttrs: assessmentsJson)
         }
 
         if let requestsJson = json["requests"] as? [[String]] {
@@ -343,8 +358,7 @@ class UserData {
             questionary = Quest.initQuestionary(questionaryAttributes: questionaryAttributes)
         }
         if let assessmentsAttributes = UserDefaults.standard.array(forKey: keyAssessments) as? [[Any]] {
-            (assessments, historyAssessments, historyDates)
-                = Assessment.initAssessments(assessAttrs:assessmentsAttributes)
+            assessments = Assessment.initAssessments(assessAttrs:assessmentsAttributes)
         }
         if let requestsAttributes = UserDefaults.standard.array(forKey: keyRequests) as? [[String]] {
             (requests, eventRequests, events)

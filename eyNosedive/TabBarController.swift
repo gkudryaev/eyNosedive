@@ -8,21 +8,29 @@
 
 import UIKit
 
+
+
+enum Pages: Int {
+    case Search = 0, Profile, Archive, Request
+}
+
 class TabBarController: UITabBarController {
+    
+    
     
     var personsSeq = UserData.shared.personsSeq
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        Queue.shared.tabBar = self
+        Queue.shared.load()
+        Queue.shared.startTimer()
     }
     
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         
         if personsSeq != UserData.shared.personsSeq {
             for vc in viewControllers! {
-                if let vc = vc as? SearchTVC {
-                    vc.updateData()
-                }
                 if let vc = vc as? UITableViewController {
                     vc.tableView.reloadData()
                 }

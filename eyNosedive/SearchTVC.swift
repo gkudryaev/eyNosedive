@@ -12,17 +12,10 @@ class SearchTVC: UITableViewController {
     
     let searchController = UISearchController(searchResultsController: nil)
     
-    var persons: [UserData.Person] = []
-    
     var filteredPersons: [UserData.Person] = []
     
     var selectedIndex: IndexPath?
     
-    func updateData () {
-        persons = UserData.shared.persons.filter {
-            $0.id != UserData.shared.id
-        }
-    }
     
     @IBAction func cancelAssessment(segue:UIStoryboardSegue) {
     }
@@ -31,7 +24,7 @@ class SearchTVC: UITableViewController {
         let vc: AssessmentTVC = segue.source as! AssessmentTVC
         let qy = vc.questionary
         var i = 1
-        var assessment: [[String:String]] = []
+        var questions: [String:String] = [:]
         for q in qy {
             let indexPath = IndexPath(row: 0, section: i)
             let cell: QuestCell = vc.tableView.cellForRow(at: indexPath) as! QuestCell
@@ -42,46 +35,44 @@ class SearchTVC: UITableViewController {
             if cell.reuseIdentifier == "cellStar" {
                 val = Int(cell.questStar.rating)
             }
-            assessment.append(["id": String(q.id), "val": String(val)])
+            questions [String(q.id)] = String(val)
             //todo append event_id
             i += 1
         }
-        requestAssessment(estimated: vc.person!.id, assessment: assessment, request: vc.request)
-    }
-    func requestAssessment (estimated: String, assessment: [[String:String]], request: UserData.Request?) {
+        //requestAssessment(estimated: vc.person!.id, assessment: assessment, request: vc.request)
         
-        var params: [String: Any] = ["id": UserData.shared.id,
-                                     "pass": UserData.shared.pass,
-                                     "estimated_id": estimated,
-                                     "assessment": assessment
-                                    ]
-        if let request = request {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd.MM.yyyy"
+        let sysdate = dateFormatter.string(from: Date())
+        
+        let assessment = UserData.Assessment(assessmentAttr:
+            ["MANUAL",
+             sysdate,
+             sysdate + " title",
+             vc.person!.id,
+             questions
+             ]
+            )
+        UserData.shared.assessments.append(assessment)
+        UserData.shared.save()
+        
+        var params: [String: Any] = [
+            "estimated_id": vc.person!.id,
+            "assessment": questions,
+            "date": sysdate
+        ]
+        if let request = vc.request {
             params["request_id"] = request.id
         }
-        JsonHelper.request(.assessment,
-                           params,
-                           self,
-                           {(json: [String: Any]?, error: String?) -> Void in
-                            self.responseAssessment(json: json, error: error)
-                            
-        })
+        Queue.shared.append(url: .assessment, params: params)
+        
+        tableView.reloadData()
     }
-    
-    func responseAssessment (json: [String: Any]?, error: String?) {
-        if let error = error {
-            AppModule.shared.alertError(error, view: self)
-        } else {
-            UserData.shared.save(json: json!)
-            tableView.reloadData()
-        }
-    }
-    
 
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateData()
         
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
@@ -125,7 +116,7 @@ class SearchTVC: UITableViewController {
         if searchController.isActive && searchController.searchBar.text != "" {
             return filteredPersons.count
         } else {
-            return persons.count
+            return UserData.shared.personsSearch.count
         }
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -135,7 +126,7 @@ class SearchTVC: UITableViewController {
         if searchController.isActive && searchController.searchBar.text != "" {
             person = filteredPersons[indexPath.row]
         } else {
-            person = persons[indexPath.row]
+            person = UserData.shared.personsSearch[indexPath.row]
         }
         cell.nameLabel.text = person.name
         cell.positionLabel.text = person.position + " / " + person.department
@@ -165,7 +156,7 @@ class SearchTVC: UITableViewController {
             return i.characters.count > 0
         }
         
-        filteredPersons = persons.filter{
+        filteredPersons = UserData.shared.personsSearch.filter{
             s in
             for token in tokens {
                 if !s.searchString.contains(token) {
@@ -183,11 +174,11 @@ class SearchTVC: UITableViewController {
             if searchController.isActive && searchController.searchBar.text != "" {
                 vc.person = filteredPersons[selectedIndex!.row]
             } else {
-                vc.person = persons[selectedIndex!.row]
+                vc.person = UserData.shared.personsSearch[selectedIndex!.row]
             }
             let assessments = UserData.shared.assessments
             var paa = assessments.filter {$0.estimated == vc.person!.id}
-            paa = paa.sorted {UserData.Assessment.toDate($0.date) > UserData.Assessment.toDate($1.date)}
+            paa = paa.sorted {UserData.toDate($0.date) > UserData.toDate($1.date)}
             vc.assessment = paa.first
         }
     }
