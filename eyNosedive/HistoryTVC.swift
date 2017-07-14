@@ -10,11 +10,12 @@ import UIKit
 
 class HistoryTVC: UITableViewController {
     
+    /*
     var assessments = UserData.shared.assessments
     var historyAssessments = UserData.shared.historyAssessments
     var historyDates = UserData.shared.historyDates
     var persons = UserData.shared.persons
-    
+    */
     var selectedIndex: IndexPath?
 
 
@@ -26,21 +27,21 @@ class HistoryTVC: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return historyDates.count
+        return UserData.shared.historyDates.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return historyAssessments[historyDates[section]]!.count
+        return UserData.shared.historyAssessments[UserData.shared.historyDates[section]]!.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! SearchCell
         
-        let assessment = (historyAssessments[historyDates[indexPath.section]])![indexPath.row]
+        let assessment = (UserData.shared.historyAssessments[UserData.shared.historyDates[indexPath.section]])![indexPath.row]
         
-        let person = (persons.filter {$0.id == assessment.estimated}).first!
+        let person = (UserData.shared.persons.filter {$0.id == assessment.estimated}).first!
         
         cell.nameLabel.text = person.name
         cell.positionLabel.text = person.position + " / " + person.department
@@ -61,7 +62,7 @@ class HistoryTVC: UITableViewController {
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 
         let view = UISectionInHeaderView()
-        view.header(commentString: historyDates[section])
+        view.header(commentString: UserData.shared.historyDates[section])
         return view
     }
 
@@ -77,8 +78,8 @@ class HistoryTVC: UITableViewController {
         if let selectedIndex = tableView.indexPathForSelectedRow {
             if let vc = segue.destination as? AssessmentTVC {
 
-                vc.assessment = (historyAssessments[historyDates[selectedIndex.section]])![selectedIndex.row]
-                vc.person = (persons.filter {$0.id == vc.assessment?.estimated}).first!
+                vc.assessment = (UserData.shared.historyAssessments[UserData.shared.historyDates[selectedIndex.section]])![selectedIndex.row]
+                vc.person = (UserData.shared.persons.filter {$0.id == vc.assessment?.estimated}).first!
                 vc.isEditable = false
             }
             

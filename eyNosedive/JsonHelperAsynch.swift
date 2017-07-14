@@ -90,8 +90,13 @@ class JsonHelperAsynch {
                             } else {
                                 completion(json, nil)
                             }
+                        } else {
+                            completion(nil, String(describing: data))
                         }
+                        
                     }
+                } else {
+                    completion(nil, "No connection")
                 }
             }
         }

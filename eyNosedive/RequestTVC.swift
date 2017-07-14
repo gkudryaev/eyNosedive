@@ -9,26 +9,6 @@
 import UIKit
 
 class RequestTVC: UITableViewController {
-    
-    var requests = UserData.shared.requests
-    var eventRequests = UserData.shared.eventRequests
-    var events = UserData.shared.events
-    var persons = UserData.shared.persons
-
-    func updateData () {
-        requests = UserData.shared.requests
-        eventRequests = UserData.shared.eventRequests
-        events = UserData.shared.events
-        persons = UserData.shared.persons
-    }
-
-
-    func shortName () {
-        requests = UserData.shared.requests
-        eventRequests = UserData.shared.eventRequests
-        events = UserData.shared.events
-        persons = UserData.shared.persons
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,20 +16,20 @@ class RequestTVC: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return events.count
+        return UserData.shared.events.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (eventRequests[events[section]]?.count)!
+        return (UserData.shared.eventRequests[UserData.shared.events[section]]?.count)!
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! SearchCell
         
-        let request = (eventRequests[events[indexPath.section]])![indexPath.row]
+        let request = (UserData.shared.eventRequests[UserData.shared.events[indexPath.section]])![indexPath.row]
         
-        let person = (persons.filter {$0.id == request.estimated}).first!
+        let person = (UserData.shared.persons.filter {$0.id == request.estimated}).first!
         
         cell.nameLabel.text = person.name
         cell.positionLabel.text = person.position + " / " + person.department
@@ -72,7 +52,7 @@ class RequestTVC: UITableViewController {
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         let view = UISectionInHeaderView()
-        view.header(commentString: events[section])
+        view.header(commentString: UserData.shared.events[section])
         return view
     }
     
@@ -83,48 +63,30 @@ class RequestTVC: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         
         if editingStyle == .delete {
-            if let requestId = (eventRequests[events[indexPath.section]])?[indexPath.row].id {
-                requestRequestDelete(requestId: requestId)
+            if let request = (UserData.shared.eventRequests[UserData.shared.events[indexPath.section]])?[indexPath.row]
+            {
+                Queue.shared.append(url: .requestDelete, params:
+                    [
+                        "request_id": request.id
+                    ]
+                )
+                if let ind = UserData.shared.requests.index(where: { (r) in
+                    request.id == r.id
+                }) {
+                    UserData.shared.requests.remove(at: ind)
+                    UserData.shared.save()
+                    tableView.reloadData()
+                }
             }
         }
-        
     }
-
-    func requestRequestDelete (requestId: String) {
-        let u = UserData.shared
-        JsonHelper.request(.requestDelete,
-                           ["id": u.id,
-                            "pass": u.pass,
-                            "request_id": requestId
-                            ],
-                           self,
-                           {(json: [String: Any]?, error: String?) -> Void in
-                            self.responseRequestDelete(json: json, error: error)
-                            
-        })
-        
-    }
-    
-    func responseRequestDelete (json: [String: Any]?, error: String?) {
-        
-        if let error = error {
-            AppModule.shared.alertError(error, view: self)
-        } else {
-            UserData.shared.save(json: json!)
-            shortName()
-            tableView.reloadData()
-        }
-        
-    }
-
-    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? AssessmentTVC {
             if let selectedIndex = tableView.indexPathForSelectedRow {
-                let request = (eventRequests[events[selectedIndex.section]])! [selectedIndex.row]
+                let request = (UserData.shared.eventRequests[UserData.shared.events[selectedIndex.section]])! [selectedIndex.row]
                 vc.request = request
-                vc.person = (persons.filter {$0.id == request.estimated}).first!
+                vc.person = (UserData.shared.persons.filter {$0.id == request.estimated}).first!
 
                 let assessments = UserData.shared.assessments
                 var paa = assessments.filter {$0.estimated == vc.person!.id}

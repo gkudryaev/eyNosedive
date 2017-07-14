@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-struct Event {
+class Event {
     enum Status: String {
         case queue, ok, error
     }
@@ -23,7 +23,7 @@ struct Event {
         return [
             url.rawValue,
             params,
-            status,
+            status.rawValue,
             msg
         ]
     }
@@ -54,11 +54,6 @@ class Queue {
     
     static let shared: Queue = Queue()
     
-    //TODO - add save queue in append, shift, ...
-    //TODO - load queue
-    //TODO - continue parameter, if queue > 1
-    //TODO - error and incomplete - remove from queue only in success
-    //TODO - check all type of error: internet, pl/sql error, ...
     //TODO - Profile - add information queue about
     
 
@@ -82,6 +77,7 @@ class Queue {
             }
         }
         self.queue = queue
+        setBadge()
     }
 
     
@@ -124,18 +120,21 @@ class Queue {
     }
 
     func response (json: [String: Any]?, error: String?) {
-        if let error = error {
-            print(error)
-            //AppModule.shared.alertError(error, view: self)
-        } else {
-            UserData.shared.save(json: json!)
-        }
         lock.sync() {
-            queue.remove(at: 0)
-            setBadge()
+            if let error = error {
+                if let event = queue.first {
+                    event.msg = error
+                    event.status = .error
+                }
+            } else {
+                queue.remove(at: 0)
+                if queue.count == 0 {
+                    UserData.shared.save(json: json!)
+                }
+                setBadge()
+            }
             save()
         }
         startTimer()
     }
-
 }

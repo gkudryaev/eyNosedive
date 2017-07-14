@@ -57,7 +57,22 @@ class UserData {
     var historyDates: [String] = []
     var historyAssessments: [String: [Assessment]] = [:]
     
-    var requests: [Request] = []
+    var requests: [Request] = [] {
+        didSet {
+            var eventRequests: [String:[Request]] = [:]
+            for request in self.requests {
+                var r = eventRequests[request.event]
+                if r == nil {
+                    r = []
+                }
+                r?.append(request)
+                eventRequests[request.event] = r
+            }
+            self.eventRequests = eventRequests
+            self.events = Array(eventRequests.keys)
+            //events.sort {toDate($0) > toDate($1)}
+            }
+    }
     var events: [String] = []
     var eventRequests : [String: [Request]] = [:]
     
@@ -219,25 +234,14 @@ class UserData {
                 estimated,
                 event             ]
         }
-        static func initRequests (requestAttrs: [[String]]) ->
-            ([Request], [String: [Request]], [String])
-        {
+        static func initRequests (requestAttrs: [[String]]) -> [Request] {
+            
             var requests: [Request] = []
-            var eventRequests: [String:[Request]] = [:]
             for r in requestAttrs {
                 let request = Request(requestAttr: r)
                 requests.append(request)
-                var r = eventRequests[request.event]
-                if r == nil {
-                    r = []
-                }
-                r?.append(request)
-                eventRequests[request.event] = r
             }
-            let events: [String] = Array(eventRequests.keys)
-            //events.sort {toDate($0) > toDate($1)}
-            
-            return (requests, eventRequests, events)
+            return requests
         }
         
     }
@@ -328,8 +332,7 @@ class UserData {
         }
 
         if let requestsJson = json["requests"] as? [[String]] {
-            (requests, eventRequests, events)
-                = Request.initRequests(requestAttrs: requestsJson)
+            requests = Request.initRequests(requestAttrs: requestsJson)
         }
 
         if let requestsJson = json["outRequests"] as? [String] {
@@ -361,8 +364,7 @@ class UserData {
             assessments = Assessment.initAssessments(assessAttrs:assessmentsAttributes)
         }
         if let requestsAttributes = UserDefaults.standard.array(forKey: keyRequests) as? [[String]] {
-            (requests, eventRequests, events)
-                = Request.initRequests(requestAttrs: requestsAttributes)
+            requests = Request.initRequests(requestAttrs: requestsAttributes)
         }
         if let outRequests = UserDefaults.standard.array(forKey: keyOutRequests) as? [String] {
             self.outRequests = outRequests

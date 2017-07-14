@@ -15,9 +15,7 @@ enum Pages: Int {
 }
 
 class TabBarController: UITabBarController {
-    
-    
-    
+
     var personsSeq = UserData.shared.personsSeq
 
     override func viewDidLoad() {
@@ -41,26 +39,13 @@ class TabBarController: UITabBarController {
         let ind = tabBar.items?.index(of: item)
         
         if let vc = viewControllers?[ind!] {
-            
             if let vc = viewControllers?[0] as? SearchTVC {
                 vc.searchController.isActive = false
-                
             }
-            
             if let vc = vc as? HistoryTVC {
-                vc.assessments = UserData.shared.assessments
-                vc.historyAssessments = UserData.shared.historyAssessments
-                vc.historyDates = UserData.shared.historyDates
-                vc.persons = UserData.shared.persons
-
                 vc.tableView.reloadData()
             }
             if let vc = vc as? RequestTVC {
-                vc.requests = UserData.shared.requests
-                vc.eventRequests = UserData.shared.eventRequests
-                vc.events = UserData.shared.events
-                vc.persons = UserData.shared.persons
-                
                 vc.tableView.reloadData()
             }
         }
